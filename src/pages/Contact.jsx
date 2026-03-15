@@ -19,13 +19,16 @@ export default function Contact() {
         const TEMPLATE_ID = 'template_70owtrq';
         const PUBLIC_KEY = 'D8nFiIKX52OBvtDXI';
 
-        emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY)
+        emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, {
+            publicKey: PUBLIC_KEY
+        })
             .then(() => {
                 setStatus({ loading: false, submitted: true, error: null });
                 setForm({ name: '', email: '', phone: '', service: '', message: '' });
             }, (error) => {
                 console.error('Email failed:', error);
-                setStatus({ loading: false, submitted: false, error: 'Failed to send message. Please try again later.' });
+                const errorMsg = error?.text || error?.message || 'Failed to send message. Please try again later.';
+                setStatus({ loading: false, submitted: false, error: `Error: ${errorMsg}` });
             });
     };
 
