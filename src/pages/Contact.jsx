@@ -14,14 +14,20 @@ export default function Contact() {
         setStatus({ ...status, loading: true });
 
         // EmailJS Configuration
-        // NOTE: Make sure to replace YOUR_PUBLIC_KEY with your actual Public Key from EmailJS
         const SERVICE_ID = 'service_3wk2brj'; 
         const TEMPLATE_ID = 'template_70owtrq';
         const PUBLIC_KEY = 'D8nFiIKX52OBvtDXI';
 
-        emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, {
-            publicKey: PUBLIC_KEY
-        })
+        const templateParams = {
+            from_name: form.name,
+            from_email: form.email,
+            phone: form.phone,
+            service: form.service,
+            message: form.message,
+            reply_to: form.email // This allows you to reply directly to the user
+        };
+
+        emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
             .then(() => {
                 setStatus({ loading: false, submitted: true, error: null });
                 setForm({ name: '', email: '', phone: '', service: '', message: '' });

@@ -635,11 +635,28 @@
 .form-group select,
 .form-group textarea {
     padding: 14px 18px;
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.05); /* Slightly darker for better contrast */
     border: 1px solid var(--border-light);
     border-radius: var(--radius-sm);
     color: white;
     width: 100%;
+    font-family: inherit;
+    font-size: 15px;
+    transition: var(--transition-base);
+}
+
+.form-group select option {
+    background: #0f172a; /* Solid dark background for the dropdown options */
+    color: white;
+    padding: 10px;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 /* Responsive Overrides */

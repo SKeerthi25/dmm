@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiArrowRight, FiMapPin, FiUsers, FiHeart, FiTrendingUp, FiStar } from 'react-icons/fi';
+import { FiArrowRight, FiMapPin, FiUsers, FiHeart, FiTrendingUp, FiStar, FiCheckCircle, FiLoader } from 'react-icons/fi';
+import emailjs from '@emailjs/browser';
 import './PageStyles.css';
 
 const openings = [
@@ -40,11 +41,33 @@ const itemVariants = {
 
 export default function Careers() {
     const [appForm, setAppForm] = useState({ name: '', email: '', role: '', message: '' });
+    const [status, setStatus] = useState({ loading: false, submitted: false, error: null });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        alert('Thank you for your application! We will review your details and be in touch shortly.');
-        setAppForm({ name: '', email: '', role: '', message: '' });
+        setStatus({ loading: true, submitted: false, error: null });
+
+        const SERVICE_ID = 'service_3wk2brj'; 
+        const TEMPLATE_ID = 'template_70owtrq';
+        const PUBLIC_KEY = 'D8nFiIKX52OBvtDXI';
+
+        const templateParams = {
+            from_name: appForm.name,
+            from_email: appForm.email,
+            phone: 'Career Application',
+            service: `Career Inquiry: ${appForm.role || 'General'}`,
+            message: appForm.message,
+            reply_to: appForm.email
+        };
+
+        emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
+            .then(() => {
+                setStatus({ loading: false, submitted: true, error: null });
+                setAppForm({ name: '', email: '', role: '', message: '' });
+            }, (error) => {
+                console.error('Email failed:', error);
+                setStatus({ loading: false, submitted: false, error: 'Failed to send application. Please try again.' });
+            });
     };
 
     return (
@@ -159,27 +182,43 @@ export default function Careers() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                     >
-                        <form className="contact-form" onSubmit={handleSubmit}>
-                            <div className="form-row">
-                                <div className="form-group">
-                                    <label>Full Name *</label>
-                                    <input type="text" placeholder="John Smith" value={appForm.name} onChange={e => setAppForm({ ...appForm, name: e.target.value })} required />
+                        {status.submitted ? (
+                            <div className="form-success" style={{ textAlign: 'center', padding: '40px' }}>
+                                <div className="success-icon" style={{ fontSize: '48px', color: 'var(--primary)', marginBottom: '20px' }}><FiCheckCircle /></div>
+                                <h3>Application Sent!</h3>
+                                <p>Thank you for your interest. Our HR team will review your application and be in touch.</p>
+                                <button className="btn btn-primary" onClick={() => setStatus({ ...status, submitted: false })}>Apply for another role</button>
+                            </div>
+                        ) : (
+                            <form className="contact-form" onSubmit={handleSubmit}>
+                                {status.error && <div className="error-message" style={{ color: '#ef4444', marginBottom: '20px', textAlign: 'center' }}>{status.error}</div>}
+                                <div className="form-row">
+                                    <div className="form-group">
+                                        <label>Full Name *</label>
+                                        <input type="text" placeholder="John Smith" value={appForm.name} onChange={e => setAppForm({ ...appForm, name: e.target.value })} required />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Email Address *</label>
+                                        <input type="email" placeholder="john@example.com" value={appForm.email} onChange={e => setAppForm({ ...appForm, email: e.target.value })} required />
+                                    </div>
                                 </div>
                                 <div className="form-group">
-                                    <label>Email Address *</label>
-                                    <input type="email" placeholder="john@example.com" value={appForm.email} onChange={e => setAppForm({ ...appForm, email: e.target.value })} required />
+                                    <label>Position of Interest</label>
+                                    <input type="text" placeholder="e.g. Senior Developer, Cloud Architect..." value={appForm.role} onChange={e => setAppForm({ ...appForm, role: e.target.value })} />
                                 </div>
-                            </div>
-                            <div className="form-group">
-                                <label>Position of Interest</label>
-                                <input type="text" placeholder="e.g. Senior Developer, Cloud Architect..." value={appForm.role} onChange={e => setAppForm({ ...appForm, role: e.target.value })} />
-                            </div>
-                            <div className="form-group">
-                                <label>Cover Letter / Message *</label>
-                                <textarea rows={5} placeholder="Tell us about yourself, your experience, and why you want to join DMM..." value={appForm.message} onChange={e => setAppForm({ ...appForm, message: e.target.value })} required></textarea>
-                            </div>
-                            <button type="submit" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }}>Submit Application <FiArrowRight /></button>
-                        </form>
+                                <div className="form-group">
+                                    <label>Cover Letter / Message *</label>
+                                    <textarea rows={5} placeholder="Tell us about yourself, your experience, and why you want to join DMM..." value={appForm.message} onChange={e => setAppForm({ ...appForm, message: e.target.value })} required></textarea>
+                                </div>
+                                <button type="submit" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }} disabled={status.loading}>
+                                    {status.loading ? (
+                                        <><FiLoader className="spin" /> Sending...</>
+                                    ) : (
+                                        <>Submit Application <FiArrowRight /></>
+                                    )}
+                                </button>
+                            </form>
+                        )}
                     </motion.div>
                 </div>
             </section>
