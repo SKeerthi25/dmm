@@ -81,7 +81,7 @@ export default function Navbar() {
             <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
                 <div className="container nav-inner">
                     <Link to="/" className="nav-logo">
-                        <img src="/dmm-logo.png" alt="DMM Software Solutions" className="nav-logo-img" />
+                        <img src="/logo.png" alt="DMM Software Solutions" className="nav-logo-img" />
                     </Link>
 
                     <ul className="nav-links">

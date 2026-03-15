@@ -42,7 +42,7 @@ export default function Footer() {
                     <div className="footer-col footer-brand">
                         <Link to="/" className="footer-logo">
                             <img 
-                                src="/dmm-logo.png" 
+                                src="/logo.png" 
                                 alt="DMM Software Solutions" 
                                 className="footer-logo-img" 
                                 style={{ 
