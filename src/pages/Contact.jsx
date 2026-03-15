@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FiMail, FiPhone, FiMapPin, FiSend, FiClock, FiCheckCircle, FiLoader } from 'react-icons/fi';
-
+import emailjs from '@emailjs/browser';
 import './PageStyles.css';
 
 export default function Contact() {
@@ -13,33 +13,20 @@ export default function Contact() {
         e.preventDefault();
         setStatus({ ...status, loading: true });
 
-        fetch("https://formsubmit.co/ajax/dmmsolutions5073@gmail.com", {
-            method: "POST",
-            headers: { 
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                name: form.name,
-                email: form.email,
-                phone: form.phone,
-                service: form.service,
-                message: form.message
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success === "true" || data.success === true) {
+        // EmailJS Configuration
+        // NOTE: Make sure to replace YOUR_PUBLIC_KEY with your actual Public Key from EmailJS
+        const SERVICE_ID = 'service_0dbezeb'; 
+        const TEMPLATE_ID = 'template_70owtrq';
+        const PUBLIC_KEY = 'YOUR_PUBLIC_KEY'; // Replace this!
+
+        emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY)
+            .then(() => {
                 setStatus({ loading: false, submitted: true, error: null });
                 setForm({ name: '', email: '', phone: '', service: '', message: '' });
-            } else {
-                setStatus({ loading: false, submitted: false, error: 'Failed to send message. Please try again.' });
-            }
-        })
-        .catch(error => {
-            console.error('Email failed:', error);
-            setStatus({ loading: false, submitted: false, error: 'Failed to send message. Please try again later.' });
-        });
+            }, (error) => {
+                console.error('Email failed:', error);
+                setStatus({ loading: false, submitted: false, error: 'Failed to send message. Please try again later.' });
+            });
     };
 
     return (
