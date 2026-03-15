@@ -5,7 +5,10 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   preview: {
-    allowedHosts: ['dmm-solutions.onrender.com'],
+    allowedHosts: [
+      'dmm-solutions.onrender.com',
+      'dmmsoftwaresolutionslimited.com'
+    ],
     host: '0.0.0.0',
     port: 4173
   }

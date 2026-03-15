@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://dmmsoftwaresolutionsltd.com/sitemap.xml
+Sitemap: https://dmmsoftwaresolutionslimited.com/sitemap.xml
