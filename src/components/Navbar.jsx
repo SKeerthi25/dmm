@@ -26,7 +26,6 @@ const navLinks = [
     {
         label: 'Company', path: '#',
         dropdown: [
-            { label: 'Pricing', path: '/pricing' },
             { label: 'Blog', path: '/blog' },
             { label: 'Careers', path: '/careers' },
             { label: 'FAQ', path: '/faq' },

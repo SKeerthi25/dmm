@@ -8,7 +8,6 @@ import Services from './pages/Services';
 import Solutions from './pages/Solutions';
 import Technologies from './pages/Technologies';
 import Industries from './pages/Industries';
-import Pricing from './pages/Pricing';
 import Blog from './pages/Blog';
 import Careers from './pages/Careers';
 import FAQ from './pages/FAQ';
@@ -43,7 +42,6 @@ export default function App() {
           <Route path="/solutions" element={<Solutions />} />
           <Route path="/technologies" element={<Technologies />} />
           <Route path="/industries" element={<Industries />} />
-          <Route path="/pricing" element={<Pricing />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/faq" element={<FAQ />} />

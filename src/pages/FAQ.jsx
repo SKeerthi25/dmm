@@ -41,7 +41,7 @@ const faqs = [
     },
     {
         q: 'What are your pricing models?',
-        a: 'We offer four flexible engagement models: Fixed Price Project (for defined scope), Dedicated Development Team (for ongoing builds), Hourly Consulting (for advisory and ad-hoc work), and Long-Term Support & Maintenance contracts. Visit our Pricing page for full details, or contact us for a tailored quote.',
+        a: 'We offer four flexible engagement models: Fixed Price Project (for defined scope), Dedicated Development Team (for ongoing builds), Hourly Consulting (for advisory and ad-hoc work), and Long-Term Support & Maintenance contracts. Contact us for a tailored quote and more details.',
     },
     {
         q: 'Can I see examples of your previous work?',
