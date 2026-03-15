@@ -15,7 +15,7 @@ export default function Contact() {
 
         // EmailJS Configuration
         // NOTE: Make sure to replace YOUR_PUBLIC_KEY with your actual Public Key from EmailJS
-        const SERVICE_ID = 'service_0dbezeb'; 
+        const SERVICE_ID = 'service_3wk2brj'; 
         const TEMPLATE_ID = 'template_70owtrq';
         const PUBLIC_KEY = 'D8nFiIKX52OBvtDXI';
 
